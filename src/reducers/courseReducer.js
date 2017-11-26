@@ -8,8 +8,9 @@ export default function courseReducer(state = [initialState.courses], action) {
       return action.courses;
 
     case types.CREATE_COURSES_SUCCESS:
-      // Creating a new array: first expand all the courses inside the array,
-      // and the last element is the new course taken from the action.
+      // Creating a new array: first expand all the courses
+      // inside the array with the spread operator, and the last
+      // element is the new course taken from the action.
       return [
         ...state,
         Object.assign({}, action.course)

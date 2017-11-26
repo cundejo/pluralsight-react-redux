@@ -17,6 +17,14 @@ class ManageCoursePage extends React.Component {
     this.saveCourse = this.saveCourse.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    debugger;
+    if (this.props.course.id != nextProps.course.id) {
+      // Necessary to populate form when existing course is loaded directly
+      this.setState({course: Object.assign({}, nextProps.course)});
+    }
+  }
+
   // This function is called in the onChange event of every input
   // of the CourseForm Component, and in every change it will create a copy
   // of the whole object course with the change and save it in the state.
@@ -28,7 +36,7 @@ class ManageCoursePage extends React.Component {
   }
 
   // This event will be called in the submit event of the CourseForm Component.
-  saveCourse(){
+  saveCourse() {
     event.preventDefault();
     this.props.actions.saveCourse(this.state.course);
     this.context.router.push('/courses');
@@ -63,7 +71,7 @@ ManageCoursePage.contextTypes = {
 function getCourseById(courses, courseId) {
   // debugger;
   const coursesFiltered = courses.filter(course => course.id === courseId); // Filter always return an array
-  if(coursesFiltered.length){
+  if (coursesFiltered.length) {
     return coursesFiltered[0];
   } else {
     return null;
@@ -77,7 +85,7 @@ function mapStateToProps(state, ownProps) {
     id: '', watchHref: '', title: '', authorId: '', length: '', category: ''
   };
 
-  if(courseId){
+  if (courseId && state.courses.lentgth > 0) {
     course = getCourseById(state.courses, courseId);
   }
 
